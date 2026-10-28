@@ -6,10 +6,10 @@ class TextClipGenerator
   class Error < StandardError; end
 
   DURATION   = 5
-  WIDTH      = 1280
-  HEIGHT     = 720
+  WIDTH      = 400
+  HEIGHT     = 226
   BACKGROUND = "0x111827"
-  FONT_SIZE  = 96
+  FONT_SIZE  = 30
   MAX_LINE_CHARS = 24
   FFMPEG = ENV.fetch("FFMPEG_PATH", "ffmpeg")
 
@@ -59,15 +59,15 @@ class TextClipGenerator
   # Shrink the font for long lines so they never run off the screen.
   def font_size
     longest = wrapped_text.lines.map { |l| l.strip.length }.max.to_i
-    [FONT_SIZE, (WIDTH * 0.86 / (longest * 0.62)).floor].min.clamp(24, FONT_SIZE)
+    [FONT_SIZE, (WIDTH * 0.86 / (longest * 0.62)).floor].min.clamp(12, FONT_SIZE)
   end
 
   def run_ffmpeg(text_file)
     cmd = [
       FFMPEG, "-y", "-loglevel", "error",
-      "-f", "lavfi", "-i", "color=c=#{BACKGROUND}:s=#{WIDTH}x#{HEIGHT}:d=#{DURATION}:r=30",
+      "-f", "lavfi", "-i", "color=c=#{BACKGROUND}:s=#{WIDTH}x#{HEIGHT}:d=#{DURATION}:r=24",
       "-vf", drawtext_filter(text_file),
-      "-c:v", "libx264", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+      "-c:v", "libx264", "-preset", "ultrafast", "-crf", "28", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
       @output_path
     ]
 
@@ -83,10 +83,10 @@ class TextClipGenerator
       "expansion=none",
       "fontsize=#{font_size}",
       "fontcolor=white",
-      "line_spacing=12",
+      "line_spacing=4",
       "x=(w-text_w)/2",
       # slides up 80px with ease-out during the first second
-      "y=(h-text_h)/2+80*pow(1-min(t\\,1)\\,2)",
+      "y=(h-text_h)/2+25*pow(1-min(t\\,1)\\,2)",
       # 1s fade in, hold, 1s fade out
       "alpha='if(lt(t,1),t,if(gt(t,#{DURATION - 1}),#{DURATION}-t,1))'"
     ].join(":")
