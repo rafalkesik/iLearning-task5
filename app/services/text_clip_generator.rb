@@ -66,13 +66,28 @@ class TextClipGenerator
     cmd = [
       FFMPEG, "-y", "-loglevel", "error",
       "-f", "lavfi", "-i", "color=c=#{BACKGROUND}:s=#{WIDTH}x#{HEIGHT}:d=#{DURATION}:r=24",
-      "-vf", drawtext_filter(text_file),
-      "-c:v", "libx264", "-preset", "ultrafast", "-crf", "28", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+      "-f", "lavfi", "-i", "anoisesrc=d=1:c=pink:a=0.5:r=44100",   # whoosh source
+      "-f", "lavfi", "-i", "sine=f=880:d=0.6:r=44100",              # ping source
+      "-filter_complex", filter_complex(text_file),
+      "-map", "[v]", "-map", "[a]",
+      "-c:v", "libx264", "-preset", "ultrafast", "-crf", "28", "-pix_fmt", "yuv420p",
+      "-c:a", "aac", "-b:a", "96k", "-t", DURATION.to_s, "-movflags", "+faststart",
       @output_path
     ]
 
     output, status = Open3.capture2e(*cmd)
     raise Error, "FFmpeg failed: #{output}" unless status.success?
+  end
+
+  def filter_complex(text_file)
+    [
+      "[0:v]#{drawtext_filter(text_file)}[v]",
+      # whoosh while the text slides in (first second)
+      "[1:a]lowpass=f=1800,afade=t=in:d=0.5,afade=t=out:st=0.5:d=0.5[whoosh]",
+      # soft ping as the text settles (~0.9s in)
+      "[2:a]volume=0.35,afade=t=out:st=0.15:d=0.45,adelay=900|900[ping]",
+      "[whoosh][ping]amix=inputs=2:duration=longest:normalize=0,apad=whole_dur=#{DURATION}[a]"
+    ].join(";")
   end
 
   def drawtext_filter(text_file)

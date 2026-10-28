@@ -6,7 +6,7 @@
   <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px">
     <% @clips.each do |url| %>
       <div>
-        <video src="<%= url %>" width="100%" controls loop muted playsinline></video>
+        <video src="<%= url %>" width="100%" controls loop playsinline></video>
         <%= link_to "Download", url, download: true %>
       </div>
     <% end %>
