@@ -42,7 +42,7 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libsqlite3-0 libvips && \
+    apt-get install --no-install-recommends -y curl libsqlite3-0 libvips ffmpeg fonts-dejavu-core && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
@@ -51,7 +51,8 @@ COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
+    mkdir -p public/clips && \
+    chown -R rails:rails db log storage tmp public/clips
 USER rails:rails
 
 # Entrypoint prepares the database.
@@ -60,6 +61,3 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 CMD ["./bin/rails", "server"]
-
-# build FFmpeg with drawtext on the server
-RUN apt-get update && apt-get install -y ffmpeg fonts-dejavu-core
