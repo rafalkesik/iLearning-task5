@@ -1,0 +1,8 @@
+<h1>Your clip</h1>
+
+<video src="<%= @video_url %>" width="640" controls autoplay loop muted playsinline></video>
+
+<p>
+  <%= link_to "Download MP4", @video_url, download: true %> ·
+  <%= link_to "Make another", new_text_clip_path %>
+</p>

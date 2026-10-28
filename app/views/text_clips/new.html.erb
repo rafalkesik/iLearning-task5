@@ -1,0 +1,17 @@
+<h1>Text animation clips</h1>
+
+<% if flash[:alert] %>
+  <p style="color: #b91c1c"><%= flash[:alert] %></p>
+<% end %>
+
+<%= form_with url: text_clips_path, method: :post do |f| %>
+  <% 6.times do |i| %>
+    <p>
+      <%= f.label "text_#{i}", "Clip #{i + 1}" %><br>
+      <%= text_field_tag "texts[]", nil, id: "text_#{i}", maxlength: 120, size: 40, autofocus: i.zero? %>
+    </p>
+  <% end %>
+  <%= f.submit "Generate clips" %>
+<% end %>
+
+<p><small>Leave fields empty to skip them. Rendering takes a few seconds.</small></p>

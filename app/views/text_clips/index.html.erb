@@ -1,0 +1,15 @@
+<h1>Your clips</h1>
+
+<% if @clips.empty? %>
+  <p>These clips have expired. <%= link_to "Make new ones", new_text_clip_path %></p>
+<% else %>
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px">
+    <% @clips.each do |url| %>
+      <div>
+        <video src="<%= url %>" width="100%" controls loop muted playsinline></video>
+        <%= link_to "Download", url, download: true %>
+      </div>
+    <% end %>
+  </div>
+  <p><%= link_to "Make more", new_text_clip_path %></p>
+<% end %>
