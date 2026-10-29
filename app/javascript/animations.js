@@ -1,35 +1,52 @@
-const video = document.querySelector(".video-container video");
-const texts  = document.querySelectorAll(".animated-text");
+let video = document.querySelector(".video-container video");
+let texts  = document.querySelectorAll(".animated-text");
 
-function setPlayState(state) {
+function selectVideo(id) {
+  console.log(".video-" + id);
+  video = document.querySelector(".video-" + id);
+}
+function selectTexts(id) {
+  texts  = document.querySelectorAll(".video-" + id + "-text");
+}
+
+
+
+function setPlayState(id, state) {
+  selectTexts(id);
   texts.forEach((t) => (t.style.animationPlayState = state));
 }
 
-function zoomTo(position, scale = 2) {
+function zoomTo(id, position, scale = 2) {
+  selectVideo(id);
   video.style.transformOrigin = position;
   video.style.transform = `scale(${scale})`;
 }
 
-function resetZoom() {
+function resetZoom(id) {
+  selectVideo(id);
   video.style.transform = "scale(1)";
 }
 
-function play() {
+function play(id) {
+  selectVideo(id);
   if (video.ended || video.currentTime === 0) {
     video.currentTime = 0;
-    restartAnimation();
+    restartAnimation(id);
   } else {
-    setPlayState("running");
+    setPlayState(id, "running");
   }
   video.play();
+  video.addEventListener("ended", () => setPlayState(id, "paused"))
 }
 
-function stop() {
+function stop(id) {
+  selectVideo(id);
   video.pause();
-  setPlayState("paused");
+  setPlayState(id, "paused");
 }
 
-function restartAnimation() {
+function restartAnimation(id) {
+  selectTexts(id);
   texts.forEach((t) => (t.style.animation = "none"));
   void document.body.offsetWidth;
   texts.forEach((t) => {
@@ -38,7 +55,7 @@ function restartAnimation() {
   });
 }
 
-video.addEventListener("ended", () => setPlayState("paused"))
+
 
 window.play = play;
 window.stop = stop;

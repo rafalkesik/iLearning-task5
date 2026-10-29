@@ -5,18 +5,18 @@
 <div class='flex flex-col'>
   <div class="video-container">
     <% @texts.each_with_index do |text, i| %>
-      <p id="video-0-text-<%= i %>" class="animated-text" style="--animations: <%= sequence[i] %>">
+      <p class="animated-text video-<%= id %>-text" style="--animations: <%= sequence[i] %>">
         <%= text %>
       </p>
     <% end %>
-    <%= video_tag "sea-video.mp4", playsinline: true, muted: true %>
+    <%= video_tag "sea-video.mp4", playsinline: true, muted: true, class: "video-#{id}" %>
   </div>
   <div class="controls">
-    <button onclick="play()" class='btn btn-primary'>Play</button>
-    <button onclick="stop()" class='btn btn-primary'>Stop</button>
-    <button onclick="zoomTo('center')" class='btn'>Zoom Center</button>
-    <button onclick="zoomTo('top left')" class='btn'>Zoom Top Left</button>
-    <button onclick="zoomTo('bottom right')" class='btn'>Zoom Bottom Right</button>
-    <button onclick="resetZoom()" class='btn'>Reset</button>
+    <button onclick="play(<%= id %>)" class='btn btn-primary'>Play</button>
+    <button onclick="stop(<%= id %>)" class='btn btn-primary'>Stop</button>
+    <button onclick="zoomTo(<%= id %>, 'center')" class='btn'>Zoom Center</button>
+    <button onclick="zoomTo(<%= id %>, 'top left')" class='btn'>Zoom Top Left</button>
+    <button onclick="zoomTo(<%= id %>, 'bottom right')" class='btn'>Zoom Bottom Right</button>
+    <button onclick="resetZoom(<%= id %>)" class='btn'>Reset</button>
   </div>
 </div>
