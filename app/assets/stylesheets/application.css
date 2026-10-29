@@ -42,6 +42,18 @@
   100% { transform: scale(1);}
 }
 
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
 @keyframes fade-in {
   from { opacity: 0 }
   to   { opacity: 1 }
@@ -85,17 +97,6 @@
   animation-direction: alternate;
 }
 
-.animation-sequence {
-  animation:  fade-in  1s ease-in-out 0s forwards,
-              grow     2s ease-in-out 1s forwards,
-              fade-out 1s ease-in-out 3s forwards,
-              fade-in  1s ease-in-out 4s forwards;
-}
-
-
-
-
-
 .video-container {
   width: 250px;
   aspect-ratio: 16/9;
@@ -116,16 +117,4 @@
 }
 .controls {
   margin-top: 5px;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
 }
