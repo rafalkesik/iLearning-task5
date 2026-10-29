@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class='h-full'>
+<html>
   <head>
     <title>Task5</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,9 +11,12 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <!-- ZMIANA: min-h-full zamienione na h-full -->
-  <body class='h-full flex flex-col w-full'>
-    <main class="container mx-auto mt-28 px-5 flex-1">
+  <body class='h-screen flex flex-col'>
+    <nav>
+      <%= render 'layouts/navbar' %>
+    </nav>
+    
+    <main class="container mx-auto py-12 px-5 flex flex-col h-full">
       <%= yield %>
     </main>
   </body>
