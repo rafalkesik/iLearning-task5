@@ -1,0 +1,49 @@
+<div class="overflow-x-auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>#</th>
+        <th>Genre</th>
+        <th>Title</th>
+        <th>Cast</th>
+        <th>Year</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        <tr onclick="toggleRow('row-1')" class='cursor-pointer'>
+          <td><span id='icon-row-1' class="inline-block transition-transform">▶</span></td>
+          <th>1</th>
+          <td>Comedy</td>
+          <td>More Girls, Please</td>
+          <td>John Smith, Lee K. Clare, DJ Queue</td>
+          <td>2023</td>
+        </tr>
+        <tr id="row-1" class='hidden'>
+          <td colspan="6"">
+            <div class="p-4">
+              <%= render 'films/player' %>
+            </div>
+          </td>
+        </tr>
+      </div>
+
+      <tr onclick="toggleRow('row-2')" class='cursor-pointer'>
+        <td><span id='icon-row-2' class="inline-block transition-transform">▶</span></td>
+        <th>2</th>
+        <td>Drama</td>
+        <td>Code, Inc.</td>
+        <td>John Smith, Nina Jones-Ackels</td>
+        <td>2025</td>
+      </tr>
+      <tr id="row-2" class='hidden'>
+          <td colspan="6"">
+            <div class="p-4">
+              <%= render 'films/player' %>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>

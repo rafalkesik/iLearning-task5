@@ -1,0 +1,5 @@
+@layer components {
+  .table tbody tr:hover {
+    @apply bg-base-200;
+  }
+}
