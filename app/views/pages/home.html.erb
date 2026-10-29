@@ -1,0 +1,51 @@
+<%= javascript_import_module_tag "gsap_client" %>
+<%= javascript_import_module_tag "animations" %>
+
+<div class='flex flex-col'>
+  <div class="video-container">
+    <p class="animated-text" style="--animations: <%= animation_sequence(@animations) %>">
+      Testowy tekst do animacji
+    </p>
+    <%= video_tag "sea-video.mp4", playsinline: true, muted: true %>
+  </div>
+  <div class="controls">
+    <button onclick="play()" class='btn'>Play</button>
+    <button onclick="stop()" class='btn'>Stop</button>
+    <button onclick="zoomTo('center')">Zoom Center</button>
+    <button onclick="zoomTo('top left')">Zoom Top Left</button>
+    <button onclick="zoomTo('bottom right')">Zoom Bottom Right</button>
+    <button onclick="resetZoom()">Reset</button>
+  </div>
+</div>
+
+
+  <%# <div id="gsap-box2" style="width:80px;height:80px;background:#e11d48;border-radius:12px;">
+    Wirujący div ⚙️
+  </div>
+  <div id='gsap-text-box' class='split'>
+    Hello, world!
+  </div>
+  <div id='scramble-text' class='scramble'>
+    Scramble me!
+  </div>
+  <div id='tri' class='tri' style='width: 120px'>
+    Scramble me!
+  </div>
+
+  <div class='bg-slate-300 w-[320px] h-[180px] overflow-hidden relative'>
+    <div class='w-fit top-left animate-loop' style='--slide-x: 0%; --slide-y: 600%; --animation: grow-and-shrink; --time: 500ms'>
+      hello
+    </div>
+    <div class='w-fit top-right' style='--slide-x: 0%; --slide-y: -600%; --animation: slide-in; --time: 500ms'>
+      bye
+    </div>
+    <div class='w-fit bottom-left' style='--slide-x: 0%; --slide-y: 600%; --animation: slide-in; --time: 500ms'>
+      hehe
+    </div>
+    <div class='w-fit bottom-right' style='--slide-x: 0%; --slide-y: 600%; --animation: fade-in; --time: 1000ms'>
+      nice
+    </div>
+    <div class='w-fit top-left animation-sequence'>
+      Test Film
+    </div>
+  </div> %>
