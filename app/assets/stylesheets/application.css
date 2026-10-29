@@ -114,6 +114,9 @@
   z-index: 10;
   display: flex;
 }
+.controls {
+  margin-top: 5px;
+}
 
 @keyframes pulse {
   0%,
