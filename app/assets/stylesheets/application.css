@@ -1,6 +1,8 @@
+/* slide-in drop-in grow shrink grow-and-shrink fade-in fade-out pulse */
+
 @keyframes slide-in {
   from {
-    transform: translate(var(--slide-x), var(--slide-y));
+    transform: translate(0, 60%);
   }
   to {
     transform: translate(0, 0);
@@ -10,31 +12,34 @@
 @keyframes drop-in {
   from {
     transform: rotate(-30deg) translateY(-100%);
-    opacity:   0;
   }
   to {
-    transform: otate(0deg) translateY(0%);
-    opacity:   1;
+    transform: rotate(0deg) translateY(0%);
   }
 }
 
 @keyframes grow {
-  from { transform: scale(0) }
-  to   { transform: scale(1) }
+  from {
+    transform: scale(0);
+  }
+  to   {
+    transform: scale(1);
+  }
 }
 
 @keyframes shrink {
   from {
-    transform: scale(5)
+    transform: scale(5);
   }
   to {
-    transform: scale(1)
+    transform: scale(1);
   }
 }
 
 @keyframes grow-and-shrink {
-  0%   { transform: scale(1); }
-  100% { transform: scale(1.5); }
+  0%   { transform: scale(1);}
+  50%  { transform: scale(1.5); }
+  100% { transform: scale(1);}
 }
 
 @keyframes fade-in {
@@ -113,7 +118,7 @@
 @keyframes pulse {
   0%,
   100% {
-    opacity: 0.6;
+    opacity: 0;
     transform: scale(1);
   }
   50% {

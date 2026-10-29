@@ -1,11 +1,15 @@
 <%= javascript_import_module_tag "gsap_client" %>
 <%= javascript_import_module_tag "animations" %>
 
+<% sequence = animation_sequence(@animations) %>
+
 <div class='flex flex-col'>
   <div class="video-container">
-    <p class="animated-text" style="--animations: <%= animation_sequence(@animations) %>">
-      Testowy tekst do animacji
-    </p>
+    <% @texts.each_with_index do |text, i| %>
+      <p id="video-0-text-<%= i %>" class="animated-text" style="--animations: <%= sequence[i] %>">
+        <%= text %>
+      </p>
+    <% end %>
     <%= video_tag "sea-video.mp4", playsinline: true, muted: true %>
   </div>
   <div class="controls">

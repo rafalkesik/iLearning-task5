@@ -1,5 +1,9 @@
 const video = document.querySelector(".video-container video");
-const text  = document.querySelector(".animated-text");
+const texts  = document.querySelectorAll(".animated-text");
+
+function setPlayState(state) {
+  texts.forEach((t) => (t.style.animationPlayState = state));
+}
 
 function zoomTo(position, scale = 2) {
   video.style.transformOrigin = position;
@@ -15,27 +19,26 @@ function play() {
     video.currentTime = 0;
     restartAnimation();
   } else {
-    text.style.animationPlayState = "running"; // resume after pause
+    setPlayState("running");
   }
   video.play();
 }
 
 function stop() {
   video.pause();
-  text.style.animationPlayState = "paused";
+  setPlayState("paused");
 }
 
 function restartAnimation() {
-  text.style.animation = "none";
-  void text.offsetWidth;
-  text.style.animation = "";
-  text.style.animationPlayState = "running";
+  texts.forEach((t) => (t.style.animation = "none"));
+  void document.body.offsetWidth;
+  texts.forEach((t) => {
+    t.style.animation = "";
+    t.style.animationPlayState = "running";
+  });
 }
 
-video.addEventListener("ended", function () {
-  text.style.animationPlayState = "paused";
-});
-
+video.addEventListener("ended", () => setPlayState("paused"))
 
 window.play = play;
 window.stop = stop;
