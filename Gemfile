@@ -66,5 +66,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-
-gem "terrapin", "~> 1.1"
+gem "tailwindcss-rails", "~> 4.0"

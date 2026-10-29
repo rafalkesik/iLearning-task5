@@ -1,15 +1,128 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+/* slide-in drop-in grow shrink grow-and-shrink fade-in fade-out pulse */
+
+@keyframes slide-in {
+  from {
+    transform: translate(0, 60%);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes drop-in {
+  from {
+    transform: rotate(-30deg) translateY(-100%);
+  }
+  to {
+    transform: rotate(0deg) translateY(0%);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scale(0);
+  }
+  to   {
+    transform: scale(1);
+  }
+}
+
+@keyframes shrink {
+  from {
+    transform: scale(5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes grow-and-shrink {
+  0%   { transform: scale(1);}
+  50%  { transform: scale(1.5); }
+  100% { transform: scale(1);}
+}
+
+@keyframes fade-in {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+
+@keyframes fade-out {
+  to { opacity: 0 }
+}
+
+.top-left {
+  position: relative;
+  top: 20px;
+  left: 10px;
+  animation: var(--animation) var(--time);
+}
+
+.top-right {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  animation: var(--animation) var(--time);
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  animation: var(--animation) var(--time);
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  animation: var(--animation) var(--time);
+}
+
+.animate-loop {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.animation-sequence {
+  animation:  fade-in  1s ease-in-out 0s forwards,
+              grow     2s ease-in-out 1s forwards,
+              fade-out 1s ease-in-out 3s forwards,
+              fade-in  1s ease-in-out 4s forwards;
+}
+
+
+
+
+
+.video-container {
+  width: 250px;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  position: relative;
+}
+.animated-text {
+  animation: var(--animations, none);
+  animation-play-state: paused;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: white;
+  z-index: 10;
+  display: flex;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
