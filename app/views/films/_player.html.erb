@@ -11,9 +11,11 @@
     <% end %>
     <%= video_tag "sea-video.mp4", playsinline: true, muted: true, class: "video-#{id}" %>
   </div>
-  <div class="controls">
-    <button onclick="play(<%= id %>)" class='btn btn-primary'>Play</button>
-    <button onclick="stop(<%= id %>)" class='btn btn-primary'>Stop</button>
+  <div class="w-[250px] mt-1 flex flex-col gap-2">
+    <div class='flex flex-1 gap-3'>
+      <button onclick="play(<%= id %>)" class='btn btn-primary flex-1'>Play</button>
+      <button onclick="stop(<%= id %>)" class='btn btn-primary flex-1'>Stop</button>
+    </div>
     <button onclick="zoomTo(<%= id %>, 'center')" class='btn'>Zoom Center</button>
     <button onclick="zoomTo(<%= id %>, 'top left')" class='btn'>Zoom Top Left</button>
     <button onclick="zoomTo(<%= id %>, 'bottom right')" class='btn'>Zoom Bottom Right</button>
