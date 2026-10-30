@@ -67,3 +67,5 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 4.0"
+
+gem "heroicon", "~> 1.0"
