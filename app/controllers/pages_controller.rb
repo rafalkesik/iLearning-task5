@@ -9,5 +9,6 @@ class PagesController < ApplicationController
       "Brad Pitt",
       "INCEPTION"
     ]
+
   end
 end
