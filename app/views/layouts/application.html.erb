@@ -12,12 +12,12 @@
     <%= favicon_link_tag "favicon.png" %>
   </head>
 
-  <body class='h-full flex flex-col bg-base-200'>
+  <body class='h-full min-h-[100vh] flex flex-col bg-base-200'>
     <nav>
       <%= render 'layouts/navbar' %>
     </nav>
     
-    <main class="container mx-auto py-8 my-5 px-5 flex flex-col h-full bg-white">
+    <main class="container mx-auto py-8 my-5 px-5 flex flex-col h-full min-h-[85vh] bg-white">
       <%= yield %>
     </main>
   </body>
