@@ -1,9 +1,11 @@
-<% if params.key?(:likes) %>
-  <%= turbo_stream.update "likes_1",   @copy[0][:likes] %>
-<% end %>
+<% @copy.each_with_index do |copy, i| %>
+  <% if params.key?(:likes) %>
+    <%= turbo_stream.update "likes_#{i + 1}", copy[:likes] %>
+  <% end %>
 
-<% if params.key?(:reviews) %>
-  <%= turbo_stream.update "reviews_1",
-        partial: 'pages/reviews',
-        locals: { id: 1, reviews: @copy[0][:reviews] } %>
+  <% if params.key?(:reviews) %>
+    <%= turbo_stream.update "reviews_#{i + 1}",
+          partial: 'pages/reviews',
+          locals: { id: i + 1, reviews: copy[:reviews] } %>
+  <% end %>
 <% end %>

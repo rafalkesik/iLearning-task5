@@ -8,18 +8,31 @@ module CopyHelper
   end
 
   def generate_film_data_object(seed, likes_input, reviews_input)
-    { title: 'More Girls, Please',
-      genre: 'Comedy',
-      cast: ['John Smith', 'Lee K. Clare', 'DJ Queue'],
-      year: '2023',
-      length: '144',
-      age: '13',
-      director: 'Lee Jarmush',
+    copy = [{ title: 'More Girls, Please',
+              genre: 'Comedy',
+              cast: ['John Smith', 'Lee K. Clare', 'DJ Queue'],
+              year: '2023',
+              length: '144',
+              age: '13',
+              director: 'Lee Jarmush',
+              tag: 'Top 10',
+              description: 'After years apart, a mother is forced to reunite with her husband.',
+            },
+            { title: 'Code, Inc.',
+              genre: 'Drama',
+              cast: ['John Smith', 'Nina Jones-Ackels'],
+              year: '2025',
+              length: '122',
+              age: '18',
+              director: 'Bob Kowalsky',
+              tag: 'Top 100',
+              description: 'Will machines take over the world? Find out!',
+            }]
+    copy[seed.to_i].merge(
       likes: roll_amount_from_float(likes_input),
-      tag: 'Top 10',
-      description: 'After years apart, a mother is forced to reunite with her husband.',
       reviews: generate_reviews(roll_amount_from_float(reviews_input))
-      }
+    )
+
   end
 
   def generate_reviews(amount)

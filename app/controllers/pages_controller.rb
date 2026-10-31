@@ -14,21 +14,8 @@ class PagesController < ApplicationController
     ]
 
     @copy = [
-      helpers.generate_film_data_object('seed', @likes_input, @reviews_input),
-      { title: 'Code, Inc.',
-        genre: 'Drama',
-        cast: ['John Smith', 'Nina Jones-Ackels'],
-        year: '2025',
-        length: '122',
-        age: '18',
-        director: 'Bob Kowalsky',
-        likes: 1,
-        tag: 'Top 100',
-        description: 'Will machines take over the world? Find out!',
-        reviews: [{ review: 'Bad', author: 'Unknown', company: 'N/A' },
-                  { review: 'Terrible. Never go to watch this movie, yopu will not enjoy it', author: 'Mark Zuckerberg', company: 'Meta' },
-                  { review: 'We need to regulate AI, before its too late.', author: 'Elon Musk', company: 'Twitter' }]
-      }
+      helpers.generate_film_data_object('0', @likes_input, @reviews_input),
+      helpers.generate_film_data_object('1', @likes_input, @reviews_input),
     ]
 
     respond_to do |format|
