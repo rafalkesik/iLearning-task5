@@ -7,6 +7,7 @@ class PagesController < ApplicationController
     @DEFAULT_LIKES = @DEFAULT_REVIEWS = 4.5.freeze()
     @likes_input   = params.fetch(:likes, @DEFAULT_LIKES).to_f
     @reviews_input = params.fetch(:reviews, @DEFAULT_REVIEWS).to_f
+    @seed          = '12345678'
 
     @texts = [
       ["This fall", "Brad Pitt", "INCEPTION"],
@@ -14,8 +15,8 @@ class PagesController < ApplicationController
     ]
 
     @copy = [
-      helpers.generate_film_data_object('0', @likes_input, @reviews_input),
-      helpers.generate_film_data_object('1', @likes_input, @reviews_input),
+      helpers.generate_film_data_object(@seed + '0', @likes_input, @reviews_input),
+      helpers.generate_film_data_object(@seed + '1', @likes_input, @reviews_input),
     ]
 
     respond_to do |format|

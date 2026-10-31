@@ -69,3 +69,5 @@ end
 gem "tailwindcss-rails", "~> 4.0"
 
 gem "heroicon", "~> 1.0"
+
+gem "faker", "~> 3.8"

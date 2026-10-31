@@ -1,4 +1,25 @@
 module CopyHelper
+  require 'faker'
+
+  REVIEW_START = [
+    -> { "A #{Faker::Adjective.positive} take on #{Faker::Verb.ing_form}." },
+    -> { "I went in expecting #{Faker::Food.dish}, and left feeling #{Faker::Adjective.negative}." },
+    -> { "#{Faker::Name.first_name} steals every scene." },
+    -> { "Somehow both #{Faker::Adjective.positive} and #{Faker::Adjective.negative}." }
+  ].freeze
+  REVIEW_ENDING = [
+    -> { "Would watch again." },
+    -> { "Skip it." },
+    -> { "Bring snacks." },
+    -> { "Not for everyone, but it was for me." }
+  ].freeze
+  MOVIE_GENRES = [
+    'Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Romance', 'Documentary'
+  ].freeze
+  TEASER_TEXTS = [
+    'This fall', 'Long awaited film...', 'THIS YEAR', 'This summer', 'True masterpiece', 'Nominated to Oscars', 'Critically aclaimed...'
+  ]
+
 
   def roll_amount_from_float(float_input)
     amount = float_input.floor()
@@ -8,34 +29,30 @@ module CopyHelper
   end
 
   def generate_film_data_object(seed, likes_input, reviews_input)
-    copy = [{ title: 'More Girls, Please',
-              genre: 'Comedy',
-              cast: ['John Smith', 'Lee K. Clare', 'DJ Queue'],
-              year: '2023',
-              length: '144',
-              age: '13',
-              director: 'Lee Jarmush',
-              tag: 'Top 10',
-              description: 'After years apart, a mother is forced to reunite with her husband.',
-            },
-            { title: 'Code, Inc.',
-              genre: 'Drama',
-              cast: ['John Smith', 'Nina Jones-Ackels'],
-              year: '2025',
-              length: '122',
-              age: '18',
-              director: 'Bob Kowalsky',
-              tag: 'Top 100',
-              description: 'Will machines take over the world? Find out!',
-            }]
-    copy[seed.to_i].merge(
+    rng = Random.new(seed.to_i)
+    Faker::Config.random = rng
+    actors = Array.new(rng.rand(1..3)) { Faker::Name.name }.uniq
+    film_title = generate_random_movie_title(rng)
+    
+    film = {
+      title: film_title,
       likes: roll_amount_from_float(likes_input),
-      reviews: generate_reviews(roll_amount_from_float(reviews_input))
-    )
-
+      genre: MOVIE_GENRES.sample(random: rng),
+      year: rng.rand(1968..2026),
+      length: rng.rand(100..150),
+      age: rng.rand(7..18),
+      director: Faker::Name.name,
+      tag: ['Top 10', 'Top 50', 'Top 100'].sample(random: rng),
+      description: "Quote of the movie: \"#{Faker::Quote.fortune_cookie}\"",
+      cast: actors,
+      film_texts: generate_film_texts(rng, actors[0], film_title),
+      reviews: generate_reviews(rng, roll_amount_from_float(reviews_input)),
+    }
+    Rails.logger.info "SEED #{seed}: year=#{film[:year]} reviews=#{film[:reviews].size} genre=#{film[:genre]}"
+    film
   end
 
-  def generate_reviews(amount)
+  def generate_reviews_old(amount)
     [
       { review: 'Best film eva!', author: 'Jack Smith', company: 'Hyatt Inc' },
       { review: 'I didnt like it. pretty bad', author: 'Elison D. Joel', company: 'Lang - Hahn' },
@@ -48,5 +65,36 @@ module CopyHelper
       { review: "Amazing lead actress, missing some horror elements", author: 'Laura Evans', company: 'Filmweb' },
       { review: "We need a second season NOW!!", author: 'Ray Kizon', company: 'IMDB' },
     ].shuffle.slice(0, amount)
+  end
+
+  def generate_random_movie_title(rng)
+    templates = [
+      "The #{Faker::Adjective.positive.to_s.capitalize} #{Faker::Creature::Animal.name.to_s.capitalize}",
+      "#{Faker::Name.first_name}'s #{Faker::Science.element_state.to_s.capitalize}",
+      "Return to #{Faker::Space.planet}",
+      "The #{Faker::Job.field} from #{Faker::Address.city}",
+      "#{Faker::Verb.ing_form.to_s.capitalize} in the #{Faker::Color.color_name.to_s.capitalize} #{Faker::Space.star_cluster}",
+      "Attack of the #{Faker::Number.number(digits: 2)}ft #{Faker::Food.vegetables.to_s.capitalize}s",
+      "How to #{Faker::Verb.base} Your #{Faker::Creature::Dog.breed}"
+    ]
+
+    templates.sample(random: rng)
+  end
+
+  def generate_review(rng)
+    { author: Faker::Name.name.to_s.titleize,
+      company: Faker::Company.name,
+      review: [REVIEW_START, REVIEW_ENDING]
+                .map{ |group| group.sample(random: rng).call}
+                .join(" ")
+    }
+  end
+
+  def generate_reviews(rng, amount)
+    Array.new(amount.to_i) { generate_review(rng) }
+  end
+
+  def generate_film_texts(rng, actor_name, film_title)
+    [TEASER_TEXTS.sample(random: rng), actor_name, film_title]
   end
 end

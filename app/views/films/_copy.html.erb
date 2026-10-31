@@ -20,7 +20,7 @@
   </div>
   
 
-  <div class='flex flex-col gap-1'>
+  <div class='flex flex-col gap-2'>
     <p class='font-bold text-xs'>
       Cast: 
       <span class='italic font-semibold'>
@@ -35,9 +35,6 @@
       </span>
     </p>
 
-    <p class='font-bold text-xs'>
-      Description:
-    </p>
     <p class='text-xs'>
       <%= copy[:description] %>
     </p>
@@ -45,6 +42,8 @@
     <p class='font-bold text-xs'>
       Reviews: 
     </p>
-    <%= render 'pages/reviews', id: id, reviews: copy[:reviews] %>
+    <div class='ml-2'>
+      <%= render 'pages/reviews', id: id, reviews: copy[:reviews] %>
+    </div>
   </div>
 </div>
