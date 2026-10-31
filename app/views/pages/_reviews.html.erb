@@ -1,0 +1,10 @@
+<div id="reviews_<%= id %>" class='flex flex-col gap-2'>
+  <% reviews.each do |review| %>
+    <div>
+      <p class='text-xs'><%= review[:review] %></p>
+      <p class='font-light text-[10px]'>
+        - <%= review[:author] %>, <%= review[:company] %>
+      </p>
+    </div>
+  <% end %>
+</div>

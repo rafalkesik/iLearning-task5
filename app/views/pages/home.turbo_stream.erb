@@ -1,0 +1,9 @@
+<% if params.key?(:likes) %>
+  <%= turbo_stream.update "likes_1",   @copy[0][:likes] %>
+<% end %>
+
+<% if params.key?(:reviews) %>
+  <%= turbo_stream.update "reviews_1",
+        partial: 'pages/reviews',
+        locals: { id: 1, reviews: @copy[0][:reviews] } %>
+<% end %>

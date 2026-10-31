@@ -8,7 +8,7 @@
       <%= copy[:year] %>, <%= copy[:genre] %>
     </h2>
     <div class='badge badge-soft badge-info text-xs font-bold'>
-    <%= copy[:likes] %>
+      <span id="likes_<%= id %>"><%= copy[:likes] %></span>
     <span class='size-4'><%= heroicon('hand-thumb-up')%></span>
   </div>
   </div>
@@ -45,15 +45,6 @@
     <p class='font-bold text-xs'>
       Reviews: 
     </p>
-    <div class='flex flex-col gap-2'>
-      <% copy[:reviews].each do |review| %>
-        <div>
-          <p class='text-xs'><%= review[:review] %></p>
-          <p class='font-light text-[10px]'>
-            - <%= review[:author] %>, <%= review[:company] %>
-          </p>
-        </div>
-      <% end %>
-    </div>
+    <%= render 'pages/reviews', id: id, reviews: copy[:reviews] %>
   </div>
 </div>

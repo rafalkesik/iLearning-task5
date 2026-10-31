@@ -3,6 +3,10 @@ class PagesController < ApplicationController
     @animations = %w[pulse grow pulse]
     # @animations = %w[slide-in drop-in grow] # slide-in może być z 4 stron przynajmniej
     # @animations = %w[shrink grow-and-shrink fade-in]
+    
+    @DEFAULT_LIKES = @DEFAULT_REVIEWS = 4.5.freeze()
+    @likes_input   = params.fetch(:likes, @DEFAULT_LIKES).to_f
+    @reviews_input = params.fetch(:reviews, @DEFAULT_REVIEWS).to_f
 
     @texts = [
       ["This fall", "Brad Pitt", "INCEPTION"],
@@ -10,20 +14,7 @@ class PagesController < ApplicationController
     ]
 
     @copy = [
-      { title: 'More Girls, Please',
-        genre: 'Comedy',
-        cast: ['John Smith', 'Lee K. Clare', 'DJ Queue'],
-        year: '2023',
-        length: '144',
-        age: '13',
-        director: 'Lee Jarmush',
-        likes: 4,
-        tag: 'Top 10',
-        description: 'After years apart, a mother is forced to reunite with her husband.',
-        reviews: [{ review: 'Best film eva!', author: 'Jack Smith', company: 'Hyatt Inc' },
-                  { review: 'I didnt like it. pretty bad', author: 'Elison D. Joel', company: 'Lang - Hahn' },
-                  { review: 'None of it makes sence to me... But i think i liked it.', author: 'Lake Antonina', company: 'Boter - Becker' }]
-      },
+      helpers.generate_film_data_object('seed', @likes_input, @reviews_input),
       { title: 'Code, Inc.',
         genre: 'Drama',
         cast: ['John Smith', 'Nina Jones-Ackels'],
@@ -39,5 +30,10 @@ class PagesController < ApplicationController
                   { review: 'We need to regulate AI, before its too late.', author: 'Elon Musk', company: 'Twitter' }]
       }
     ]
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 end

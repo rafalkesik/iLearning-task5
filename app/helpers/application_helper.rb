@@ -30,7 +30,4 @@ module ApplicationHelper
       "#{main_css}, #{fade_out_css}"
     end
   end
-  
-
-
 end
