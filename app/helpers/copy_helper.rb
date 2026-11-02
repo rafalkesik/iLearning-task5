@@ -20,6 +20,9 @@ module CopyHelper
     'This fall', 'Long awaited film...', 'THIS YEAR', 'This summer', 'True masterpiece', 'Nominated to Oscars', 'Critically aclaimed...'
   ]
 
+  def generate_seed
+    8.times.map { rand(10) }.join
+  end
 
   def roll_amount_from_float(float_input)
     amount = float_input.floor()

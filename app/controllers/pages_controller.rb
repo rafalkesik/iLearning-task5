@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     @DEFAULT_LIKES = @DEFAULT_REVIEWS = 4.5.freeze()
     @likes_input   = params.fetch(:likes, @DEFAULT_LIKES).to_f
     @reviews_input = params.fetch(:reviews, @DEFAULT_REVIEWS).to_f
-    @seed          = '12345678'
+    @seed          = params.fetch(:seed, helpers.generate_seed())
 
     @texts = [
       ["This fall", "Brad Pitt", "INCEPTION"],
